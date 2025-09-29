@@ -1,0 +1,14 @@
+{
+    "name": "sitedigitaloficial/gestion",
+    "description": "Site Digital S.A.S Gestión Gestión y administración de Leads, seguimiento y control de las oportunidades generadas por las compañias.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SiteDigital",
+            "email": "desarrollo@sitedigital.com.co"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
