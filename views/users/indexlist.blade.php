@@ -6,34 +6,13 @@
 
 @section('ContenidoSite-01')
 
-<div class="content-header">
+<<div class="content-header">
  <ul class="nav-horizontal text-center">
-  <li class="active">
-   <a href="/ge/commercial"><i class="fa fa-users"></i> Usuarios</a>
-  </li>
   <li>
-   <a href="/gestion/comercial/registro"><i class="fa fa-user-plus"></i> Registrar Datos Usuario</a>
+   <a href="/ge/register-user"><i class="fa fa-user-plus"></i> Registrar Datos Usuario</a>
   </li>
-  <li>
-   <a href="/gestion/comercial/productos"><i class="gi gi-cart_in"></i>Productos & Servicios</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/sectores"><i class="fa fa-map-pin"></i>Sectores</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/referidos"><i class="fa fa-hand-pointer-o"></i>Referidos</a>
-  </li>
-   <li>
-   <a href="/gestion/comercial/cantidades"><i class="gi gi-calculator"></i>Cantidades</a>
-  </li>
-   <li>
-   <a href="/gestion/comercial/motivos"><i class="gi gi-list"></i>Motivo</a>
-  </li>
-   <li>
-   <a href="/gestion/comercial/funel"><i class="hi hi-filter"></i>Funel</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/configuracion/1"><i class="gi gi-cogwheel"></i>Configuración</a>
+ <li>
+   <a href="/ge/commercial"><i class="fa fa-list-ul"></i> Usuarios</a>
   </li>
  </ul>
 </div>
@@ -120,25 +99,28 @@
          <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->numero}}&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
 ¡Dime cómo puedo ayudarte!" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Contactar por Whatsapp" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
 
-        <a href="<?=URL::to('gestion/comercial/editar-recepcion/');?>/{{$usuariosa->id}}"><span  id="tip" data-toggle="tooltip" data-placement="right" title="Editar registro" class="btn btn-primary"><i class="fa fa-pencil-square-o sidebar-nav-icon"></i></span></a>
+     
+<a href="{{ route('ge.commercial.edit', $usuariosa->id) }}" class="btn btn-primary" title="Editar sector">
+          <i class="fa fa-pencil-square-o sidebar-nav-icon"></i>
+        </a>
 
-
-
-       <script language="JavaScript">
-		    function confirmar ( mensaje ) {
-		    return confirm( mensaje );}
-	      </script>
-
-       <a href="<?=URL::to('gestion/comercial/eliminar');?>/{{$usuariosa->id}}" onclick="return confirmar('¿Está seguro que desea eliminar el registro?')"><span id="tup" data-toggle="tooltip" data-placement="bottom" title="Eliminar usuario" class="btn btn-danger" disabled="true"><i class="hi hi-trash sidebar-nav-icon"></i></span></a>
-      
-
-      
-<!--
-<a href="<?=URL::to('/portafolio/');?>/{{$usuariosa->id}}"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Ver Portafolio" class="btn btn-info"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
--->
+        
+        {{-- Eliminar --}}
+        {!! Form::open([
+            'method' => 'DELETE',
+            'route' => ['ge.commercial.destroy', $usuariosa->id],
+            'style' => 'display:inline',
+            'onsubmit' => "return confirm('¿Está seguro que desea eliminar este sector?')"
+        ]) !!}
+          <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+            <i class="fa fa-trash"></i>
+          </button>
+        {!! Form::close() !!}
        </td>
       </tr>
-      @endforeach
+     @endforeach
+
+      
     </tbody>
    </table>
   </div>

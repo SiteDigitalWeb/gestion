@@ -9,26 +9,17 @@
 <div class="content-header">
  <ul class="nav-horizontal text-center">
   <li>
-   <a href="/gestion/comercial"><i class="fa fa-list-ul"></i> Usuarios</a>
+   <a href="/ge/register-user"><i class="fa fa-user-plus"></i> Registrar Datos Usuario</a>
   </li>
   <li>
-   <a href="/gestion/comercial/registro"><i class="fa fa-user-plus"></i> Registrar Datos Usuario</a>
-  </li>
-  <li class="active">
-   <a href="/gestion/comercial/productos"><i class="fa fa-file-o"></i>Productos & servicios</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/sectores"><i class="fa fa-file-o"></i>Sectores</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/referidos"><i class="fa fa-file-o"></i>Referidos</a>
+   <a href="/ge/commercial"><i class="fa fa-list-ul"></i> Usuarios</a>
   </li>
    <li>
-   <a href="/gestion/comercial/cantidades"><i class="fa fa-file-o"></i>Cantidades</a>
+   <a href="/ge/products/create"><i class="fa fa-list-ul"></i>Crear Producto / Servicio</a>
   </li>
+  
  </ul>
 </div>
-
 <div class="container">
  <?php $status=Session::get('status'); ?>
  @if($status=='ok_create')

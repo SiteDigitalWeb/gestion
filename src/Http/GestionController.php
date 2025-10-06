@@ -713,7 +713,6 @@ $usuarios = \DigitalsiteSaaS\Gestion\Tenant\Gestion::join('gestion_productos','g
  return view('gestion::editar-propuesta')->with('propuesta', $propuesta)->with('productos', $productos)->with('productosa', $productosa)->with('motivos', $motivos);
 }
 
-
 public function crearpropuesta($id){
  if(!$this->tenantName){
  $productos = Cms_producto::all(); 

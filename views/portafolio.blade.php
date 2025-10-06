@@ -98,7 +98,7 @@ body {
 		<img src="/{{$configuracion->logo}}">
 	</div>
 	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="datos">
-		<h4><b>{{$configuracion->empresa}}</b></h4>
+		<h4><b>{{$configuracion->empresa}} </b></h4>
 		<p>{{$configuracion->direccion}}</p>
 		<p>Telefono: {{$configuracion->telefono}}</p>
 		<p>{{$configuracion->correo}}</p>
@@ -146,9 +146,9 @@ body {
 <table>
 	<tbody>
 		<tr>
-			<td colspan="5" class="text-center" bgcolor="#351C75" style="color:#fff; padding: 15px"><b>Inversión Asociada a Productos y Servicios</b></td>
+			<td colspan="5" class="text-center" bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px"><b>Inversión Asociada a Productos y Servicios</b></td>
 		</tr>
-		<tr class="text-center"  bgcolor="#351C75" style="color:#fff; padding: 15px">
+		<tr class="text-center"  bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px">
 			<td style="padding: 15px">Item</td>
 			<td>Descripción</td>
 	
@@ -200,9 +200,9 @@ body {
 <table>
 	<tbody>
 		<tr>
-			<td colspan="6" class="text-center" bgcolor="#351C75" style="color:#fff; padding: 15px">Inversión Asociada a Productos y Servicios</td>
+			<td colspan="6" class="text-center" bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px">Inversión Asociada a Productos y Servicios</td>
 		</tr>
-		<tr class="text-center"  bgcolor="#351C75" style="color:#fff; padding: 15px">
+		<tr class="text-center"  bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px">
 			<td style="padding: 15px">Item</td>
 			<td>Descripción</td>
 			<td>Producto / Servicio</td>
