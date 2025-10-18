@@ -27,7 +27,7 @@ class UserController extends Controller
     private function resolveModel($modelName)
     {
     $namespace = $this->tenantName
-        ? "DigitalsiteSaaS\\Gestion\\Tenant\\"
+        ? "Sitedigitalweb\\Gestion\\Tenant\\"
         : "Sitedigitalweb\\Gestion\\";
 
     return $namespace . $modelName;
@@ -35,7 +35,7 @@ class UserController extends Controller
      private function resolveModelA($modelName)
     {
     $namespace = $this->tenantName
-        ? "DigitalsiteSaaS\\Pagina\\Tenant\\"
+        ? "Sitedigitalweb\\Pagina\\Tenant\\"
         : "Sitedigitalweb\\Pagina\\";
 
     return $namespace . $modelName;
