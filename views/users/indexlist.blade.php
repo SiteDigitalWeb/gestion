@@ -96,7 +96,7 @@
 
         <a href="<?=URL::to('ge/proposal');?>/{{$usuariosa->id}}?utm_referido={{$usuariosa->referido_id}}&utm_fecha={{$usuariosa->fecha}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Ver Porpuestas" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
 
-         <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->numero}}&text=¿Hola cómo estás? 🖐 Bienvenido a Unión Soluciones, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
+         <a href="https://api.whatsapp.com/send?phone=+57{{$usuariosa->phone}}&text=¿Hola cómo estás? 🖐 Bienvenido, Mi nombre es Samuel Martinez 👦, voy a asesorarte el día de hoy.
 ¡Dime cómo puedo ayudarte!" target="_blank"><span  id="tip" data-toggle="tooltip" data-placement="top" title="Contactar por Whatsapp" class="btn btn-success"><i class="fa fa-whatsapp sidebar-nav-icon"></i></span></a>
 
      

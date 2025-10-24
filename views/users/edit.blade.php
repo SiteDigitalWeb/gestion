@@ -213,7 +213,7 @@
     <div class="form-group">
      <label class="col-md-3 control-label" for="example-password-input">Comentarios</label>
       <div class="col-md-9">
-       {{Form::textarea('comentarios', $usuario->comentarios, array('class' => 'form-control','placeholder'=>'Ingrese comentarios'))}}
+       {{Form::textarea('comentarios', $usuario->message, array('class' => 'form-control','placeholder'=>'Ingrese comentarios'))}}
       </div>
     </div>
 

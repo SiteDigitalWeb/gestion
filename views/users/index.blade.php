@@ -40,8 +40,8 @@
               <strong>{{ $usuario->name }} {{ $usuario->last_name }}</strong>
               <div class="meta">{{ $usuario->empresa }} — {{ $usuario->email }} <br> {{ $usuario->phone }}</div>
               <div class="mt-1 text-right">
-                <a href="{{ url("/gestion/comercial/editar-recepcion/{$usuario->id}") }}" class="btn btn-xs btn-primary">Editar</a>
-                <a href="https://api.whatsapp.com/send?phone=+57{{ $usuario->numero }}" target="_blank" class="btn btn-xs btn-success">WA</a>
+                <a href="{{ route('ge.commercial.edit', $usuario->id) }}" class="btn btn-xs btn-primary">Editar</a>
+                <a href="https://api.whatsapp.com/send?phone=+57{{ $usuario->phone }}" target="_blank" class="btn btn-xs btn-success">WA</a>
               </div>
             </div>
           @endforeach
