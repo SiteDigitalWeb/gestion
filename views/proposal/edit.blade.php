@@ -36,6 +36,27 @@
           'id'     => 'defaultForm'
         ]) }}
 
+        {{-- Cliente --}}
+        <div class="form-group">
+          <label class="col-md-3 control-label">Cliente</label>
+          <div class="col-md-9">
+            <select name="cliente" class="form-control" required>
+              <option value="">Seleccione un cliente</option>
+              @foreach($clientes as $cliente)
+                <option value="{{ $cliente->id }}" 
+                  {{ $cliente->id == $propuesta->cms_user_id ? 'selected' : '' }}>
+                  {{ $cliente->name ?? 'Cliente #' . $cliente->id }}
+                  {{ $cliente->last_name ?? '' }}
+                  {{ $cliente->empresa ? ' - ' . $cliente->empresa : '' }}
+                </option>
+              @endforeach
+            </select>
+            @error('cliente')
+              <span class="help-block text-danger">{{ $message }}</span>
+            @enderror
+          </div>
+        </div>
+
         {{-- Estado propuesta --}}
         <div class="form-group">
           <label class="col-md-3 control-label">Estado Propuesta</label>
@@ -53,9 +74,12 @@
           <label class="col-md-3 control-label">Motivo Pérdida</label>
           <div class="col-md-9">
             <select name="motivos" class="form-control" id="motivos">
-              <option value="{{ $propuesta->motivo_id }}">{{ $propuesta->motivo_nombre }}</option>
+              <option value="">Seleccione un motivo</option>
               @foreach($motivos as $motivo)
-                <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
+                <option value="{{ $motivo->id }}" 
+                  {{ $motivo->id == $propuesta->motivo_id ? 'selected' : '' }}>
+                  {{ $motivo->motivo }}
+                </option>
               @endforeach
             </select>
           </div>
@@ -88,26 +112,23 @@
           </div>
         </div>
 
+        {{-- Presentación --}}
         <div class="form-group">
-     <label class="col-md-3 control-label">Presentación</label>
-      <div class="col-md-9">
-        {{ Form::textarea('presentacion', $propuesta->presentacion, ['id' => 'editor1','placeholder'=>'Ingrese contenido']) }}
-      </div>
-    </div>
+          <label class="col-md-3 control-label">Presentación</label>
+          <div class="col-md-9">
+            {{ Form::textarea('presentacion', $propuesta->presentacion, ['id' => 'editor1','placeholder'=>'Ingrese contenido']) }}
+          </div>
+        </div>
 
+        {{-- Términos y Condiciones --}}
+        <div class="form-group">
+          <label class="col-md-3 control-label">Términos y Condiciones</label>
+          <div class="col-md-9">
+            {{ Form::textarea('comentarios', $propuesta->observaciones, ['id' => 'editor2','placeholder'=>'Ingrese contenido']) }}
+          </div>
+        </div>
 
-
-    <div class="form-group">
-     <label class="col-md-3 control-label">Términos y Condiciones</label>
-      <div class="col-md-9">
-        {{ Form::textarea('comentarios', $propuesta->observaciones, ['id' => 'editor2','placeholder'=>'Ingrese contenido']) }}
-      </div>
-    </div>
-
-       
-
-        {{-- Cliente oculto --}}
-        {{ Form::hidden('cliente', $propuesta->cms_user_id) }}
+        {{-- Campos ocultos --}}
         {{ Form::hidden('identificador', $propuesta->identificador) }}
 
         {{-- Acciones --}}
@@ -135,7 +156,7 @@
   ClassicEditor
     .create(document.querySelector('#editor1'), {
       ckfinder: {
-        uploadUrl: '/file-manager/ckeditor' // Ajusta según tu backend
+        uploadUrl: '/file-manager/ckeditor'
       }
     })
     .catch(error => { console.error(error); });
@@ -147,5 +168,13 @@
       }
     })
     .catch(error => { console.error(error); });
+
+  // Opcional: Hacer el select de clientes searchable con Chosen
+  $(document).ready(function() {
+    $('select[name="cliente"]').chosen({
+      placeholder_text_single: "Seleccione un cliente",
+      no_results_text: "No se encontraron clientes"
+    });
+  });
 </script>
 @endsection

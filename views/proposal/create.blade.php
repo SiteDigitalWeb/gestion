@@ -47,17 +47,6 @@
     {{ Form::open(['method' => 'POST','class' => 'form-horizontal','id' => 'defaultForm', 'url' => 'ge/proposal']) }}
 
     <div class="form-group">
-     <label class="col-md-3 control-label">Estado Propuesta</label>
-      <div class="col-md-9">
-        {{ Form::select('tipo', [
-          '1' => 'En Proceso',
-          '2' => 'No Ganada',
-          '3' => 'Ganada'
-        ], null, ['class' => 'form-control']) }}
-      </div>
-    </div>
-
-    <div class="form-group">
      <label class="col-md-3 control-label">Cliente</label>
      <div class="col-md-9">
       <select name="cliente" class="form-control" required>
@@ -70,6 +59,17 @@
       </select>
      </div>
     </div> 
+
+    <div class="form-group">
+     <label class="col-md-3 control-label">Estado Propuesta</label>
+      <div class="col-md-9">
+        {{ Form::select('tipo', [
+          '1' => 'En Proceso',
+          '2' => 'No Ganada',
+          '3' => 'Ganada'
+        ], null, ['class' => 'form-control']) }}
+      </div>
+    </div>
 
     <div class="form-group">
      <label class="col-md-3 control-label">Visualización Tarifas</label>

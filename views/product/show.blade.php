@@ -15,24 +15,11 @@
 
 <div class="content-header">
    <ul class="nav-horizontal text-center">
-    <li>
-     <a href="/gestion/factura"><i class="fa fa-users"></i> Clientes</a>
-    </li>
-    <li>
-     <a href="/gestion/factura/factura-cliente"><i class="fa fa-user-plus"></i> Crear cliente</a>
-    </li>
-    <li class="active">
-     <a href="/gestion/factura/crear-producto"><i class="fa fa-shopping-basket"></i> Crear producto</a>
-    </li>
-    <li>
-     <a href="/gestion/factura/editar-empresa"><i class="fa fa-building"></i> Configurar empresa</a>
-    </li>
-    <li>
-     <a href="/gestion/factura/control-gastos"><i class="gi gi-money"></i> Gastos</a>
-    </li>
-    <li>
-     <a href="/informe/generar-informe"><i class="fa fa-file-text"></i> Informes</a>
-    </li>
+     <li class="active">
+   <a href="/ge/commercial"><i class="fa fa-list-ul"></i> Propuestas</a>
+  </li>
+    
+   
    </ul>
   </div>
 

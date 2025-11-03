@@ -9,22 +9,10 @@
 <div class="content-header">
  <ul class="nav-horizontal text-center">
   <li class="active">
-   <a href="/gestion/comercial"><i class="fa fa-list-ul"></i> Usuarios</a>
+   <a href="/ge/commercial"><i class="fa fa-list-ul"></i> Propuestas</a>
   </li>
   <li>
-   <a href="/gestion/comercial/registro"><i class="fa fa-user-plus"></i> Registrar Datos Usuario</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/productos"><i class="fa fa-file-o"></i>Productos & Servicios</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/sectores"><i class="fa fa-file-o"></i>Sectores</a>
-  </li>
-  <li>
-   <a href="/gestion/comercial/referidos"><i class="fa fa-file-o"></i>Referidos</a>
-  </li>
-   <li>
-   <a href="/gestion/comercial/cantidades"><i class="fa fa-file-o"></i>Cantidades</a>
+   <a href="/ge/proposal/create"><i class="fa fa-user-plus"></i> Crear Propuesta</a>
   </li>
  </ul>
 </div>
@@ -55,11 +43,7 @@
 
 <div class="container">
 
-<div class="container-fluid">
-  <a href="/ge/create-proposal/{{Request::segment(3)}}?utm_referido={{ Request::get('utm_referido') }}&utm_fecha={{ Request::get('utm_fecha') }}" class="btn btn-primary pull-right">Crear propuesta</a>
- </div>
- <br>
- 
+
  <div class="block full">
   <div class="block-title">
    <h2><strong>Propuestas</strong> Registradas</h2>

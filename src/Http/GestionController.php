@@ -44,6 +44,21 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
 
 }
 
+/**
+ * Obtener el modelo Cms_gestion según el contexto (tenant o central)
+ */
+private function getGestionModel()
+{
+    $website = app(\Hyn\Tenancy\Environment::class)->website();
+    
+    if ($website) {
+        return new \Sitedigitalweb\Gestion\Tenant\Cms_gestion;
+    }
+    
+    return new \Sitedigitalweb\Gestion\Cms_gestion;
+}
+
+
    public function index()
     {
         // Traer usuarios (solo columnas necesarias) y funels (con color)
@@ -82,7 +97,7 @@ $hostname = app(\Hyn\Tenancy\Environment::class)->hostname();
 public function updateFunel(Request $request, $id)
 {
     try {
-        $usuario = \Sitedigitalweb\Gestion\Cms_gestion::findOrFail($id);
+        $usuario = $this->getGestionModel()::findOrFail($id);
         $usuario->funel_id = $request->input('funel_id');
         $usuario->save();
 
@@ -92,7 +107,6 @@ public function updateFunel(Request $request, $id)
         return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
     }
 }
-
 
     public function cambiarFunel(Request $request)
 {
@@ -761,6 +775,7 @@ $empresa = Cms_propuesta::join('cms_users','cms_users.id', '=','cms_propuestas.c
  $subtotal = \DigitalsiteSaaS\Gestion\Tenant\Cms_product::where('identificador', '=', $id)->sum('valor_subtotal');
  $iva = \DigitalsiteSaaS\Gestion\Tenant\Cms_product::where('identificador', '=', $id)->sum('valor_iva');
  }
+  
 
  return view('gestion::portafolio', compact('empresa','configuracion','propuesta','subtotal','iva'));
 }

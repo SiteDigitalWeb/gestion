@@ -154,7 +154,7 @@ class ProposalController extends Controller
     }
 
     // Editar producto
-   public function edit($id)
+  public function edit($id)
 {
     // Resolver modelos según tenant
     $propuestaModel = $this->resolveModel('Cms_propuesta');
@@ -184,51 +184,76 @@ class ProposalController extends Controller
     // Motivos disponibles
     $motivos = $motivoModel::all();
 
+    // Obtener todos los clientes para el select
+    $clientes = $gestionModel::all();
+
     return view('gestion::proposal.edit', [
         'propuesta'  => $propuesta,
         'productos'  => $productosDisponibles,
         'productosa' => $productosSeleccionados,
         'motivos'    => $motivos,
+        'clientes'   => $clientes, // Agregado
+        'gestion'    => $gestion,  // Agregado para referencia
     ]);
 }
 
 
-    // Actualizar producto
-    public function update(Request $request, $id)
-    {
-      $request = request();
+   // Actualizar propuesta con debugging
+public function update(Request $request, $id)
+{
+    try {
+        \Log::info('Iniciando actualización de propuesta', ['id' => $id, 'data' => $request->all()]);
 
-    // Procesar intereses (interes[])
-    $intereses = $request->input('interes', []);
-    $productoServicio = is_array($intereses) ? implode(',', $intereses) : '';
+        // Procesar intereses (interes[])
+        $intereses = $request->input('interes', []);
+        $productoServicio = is_array($intereses) ? implode(',', $intereses) : '';
 
-    // Resolver modelo según tenant
-    $propuestaModel = $this->tenantName
-        ? \Sitedigitalweb\Gestion\Tenant\Cms_propuesta::class
-        : \Sitedigitalweb\Gestion\Cms_propuesta::class;
+        // Resolver modelo según tenant
+        $propuestaModel = $this->tenantName
+            ? \Sitedigitalweb\Gestion\Tenant\Cms_propuesta::class
+            : \Sitedigitalweb\Gestion\Cms_propuesta::class;
 
-    $propuesta = $propuestaModel::findOrFail($id);
+        $propuesta = $propuestaModel::findOrFail($id);
 
-    // Actualizar campos
-    $propuesta->fill([
-        'estado_propuesta'   => $request->input('tipo'),
-        'valor_propuesta'    => $request->input('valor'),
-        'fecha_presentacion' => $request->input('fecha'),
-        'tarifas'            => $request->input('tarifas'),
-        'identificador'      => $request->input('identificador'),
-        'asunto'             => $request->input('asunto'),
-        'presentacion'       => $request->input('presentacion'),
-        'producto_servicio'  => $productoServicio,
-        'observaciones'      => $request->input('comentarios'),
-        'cms_user_id' => $request->input('cliente'),
-        'motivo_id'          => $request->input('motivos'),
-    ]);
+        \Log::info('Propuesta encontrada', ['propuesta' => $propuesta->toArray()]);
 
-    $propuesta->save();
+        // Datos a actualizar
+        $updateData = [
+            'estado_propuesta'   => $request->input('tipo'),
+            'valor_propuesta'    => $request->input('valor'),
+            'fecha_presentacion' => $request->input('fecha'),
+            'tarifas'            => $request->input('tarifas'),
+            'identificador'      => $request->input('identificador'),
+            'asunto'             => $request->input('asunto'),
+            'presentacion'       => $request->input('presentacion'),
+            'producto_servicio'  => $productoServicio,
+            'observaciones'      => $request->input('comentarios'),
+            'cms_user_id'        => $request->input('cliente'), // Campo nuevo
+            'motivo_id'          => $request->input('motivos'),
+        ];
 
+        \Log::info('Datos a actualizar', $updateData);
 
-    return redirect('/ge/proposal')->with('status', 'ok_update');
+        // Actualizar
+        $propuesta->update($updateData);
+
+        \Log::info('Propuesta actualizada exitosamente');
+
+        return redirect('/ge/proposal')
+            ->with('status', 'ok_update')
+            ->with('success', '✅ Propuesta actualizada correctamente');
+
+    } catch (\Exception $e) {
+        \Log::error("Error actualizando propuesta ID {$id}", [
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+        
+        return redirect()->back()
+            ->with('error', '❌ Error al actualizar la propuesta')
+            ->withInput();
     }
+}
 
     public function destroy($id)
 {

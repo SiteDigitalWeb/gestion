@@ -108,9 +108,10 @@ class ConfigurationController extends Controller
     // Actualizar producto
     public function update(Request $request)
 {
+
 // Resolver el modelo dinámicamente
 $configModel = $this->tenantName
-? \Sitedigitalweb\Gestion\Tenant\Config::class
+? \Sitedigitalweb\Gestion\Tenant\Cms_Config::class
 : \Sitedigitalweb\Gestion\Cms_config::class;
 
 // Siempre actualizar el registro con ID = 1

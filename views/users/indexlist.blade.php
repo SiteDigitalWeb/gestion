@@ -72,7 +72,7 @@
    <td class="text-center">{{$usuariosa->name}} {{$usuariosa->last_name}}</td>
    <td class="text-center">{{$usuariosa->empresa}}</td>
     @foreach($funels as $funelsa)
-    @if($usuariosa->tipo == $funelsa->id)
+    @if($usuariosa->funel_id == $funelsa->id)
    <td><span class="badge" style="background:{{$funelsa->color}}">{{$funelsa->funel}} </span></td>
     @endif
    @endforeach

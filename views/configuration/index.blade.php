@@ -1,7 +1,6 @@
-
 @extends ('adminsite.layout')
 
-@section('cabecera')
+@section('cabocera')
     @parent
 @stop
 
@@ -12,124 +11,209 @@
         <h2><strong>Configuración</strong> Empresa</h2>
     </div>
 
-    {{-- Ajusta la ruta al update que tengas configurado --}}
-    {{ Form::open(['url' => url('ge/configuration/1'), 'method' => 'PUT', 'files' => true, 'class' => 'form-horizontal']) }}
+    {{-- Mostrar mensajes de éxito/error --}}
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ session('success') }}
+        </div>
+    @endif
 
-        @foreach($configuracion as $config)
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ session('error') }}
+        </div>
+    @endif
 
-            {{-- Empresa --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Empresa</label>
-                <div class="col-md-9">
-                    {{ Form::text('empresa', $config->empresa, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingrese Empresa',
-                        'required'
-                    ]) }}
-                </div>
+    @if($errors->any())
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>Errores encontrados:</strong>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    {{-- CORRECCIÓN: Usar la ruta resource correcta --}}
+    @foreach($configuracion as $config)
+        {{ Form::model($config, [
+            'route' => ['ge.configuration.update', $config->id], 
+            'method' => 'PUT', 
+            'files' => true, 
+            'class' => 'form-horizontal'
+        ]) }}
+    @endforeach
+
+        {{-- Empresa --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Empresa</label>
+            <div class="col-md-9">
+                {{ Form::text('empresa', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Empresa'
+                ]) }}
+                @error('empresa')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Dirección --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Dirección</label>
-                <div class="col-md-9">
-                    {{ Form::text('direccion', $config->direccion, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingrese Dirección',
-                        'required'
-                    ]) }}
-                </div>
+        {{-- Dirección --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Dirección</label>
+            <div class="col-md-9">
+                {{ Form::text('direccion', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Dirección'
+                ]) }}
+                @error('direccion')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Teléfono --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Teléfono</label>
-                <div class="col-md-9">
-                    {{ Form::text('telefono', $config->telefono, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingrese Teléfono',
-                        'required'
-                    ]) }}
-                </div>
+        {{-- Teléfono --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Teléfono</label>
+            <div class="col-md-9">
+                {{ Form::text('telefono', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Teléfono'
+                ]) }}
+                @error('telefono')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Sitio Web --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Sitio Web</label>
-                <div class="col-md-9">
-                    {{ Form::text('website', $config->website, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingrese Sitio Web'
-                    ]) }}
-                </div>
+        {{-- Sitio Web --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Sitio Web</label>
+            <div class="col-md-9">
+                {{ Form::text('website', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Sitio Web'
+                ]) }}
+                @error('website')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Correo --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Correo</label>
-                <div class="col-md-9">
-                    {{ Form::email('correo', $config->correo, [
-                        'class' => 'form-control',
-                        'placeholder' => 'Ingrese Correo'
-                    ]) }}
-                </div>
+        {{-- Correo --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Correo</label>
+            <div class="col-md-9">
+                {{ Form::email('correo', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Correo'
+                ]) }}
+                @error('correo')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Color Principal --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Color Principal</label>
-                <div class="col-md-9">
-                    {{ Form::color('color_principal', $config->color_principal, ['class' => 'form-control']) }}
-                </div>
+        {{-- Color Principal --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Color Principal</label>
+            <div class="col-md-9">
+                {{ Form::color('color_principal', null, ['class' => 'form-control']) }}
+                @error('color_principal')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Color Secundario --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Color Secundario</label>
-                <div class="col-md-9">
-                    {{ Form::color('color_secundario', $config->color_secundario, ['class' => 'form-control']) }}
-                </div>
+        {{-- Color Secundario --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Color Secundario</label>
+            <div class="col-md-9">
+                {{ Form::color('color_secundario', null, ['class' => 'form-control']) }}
+                @error('color_secundario')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Logo con preview --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Logo</label>
-                <div class="col-md-9">
-                    <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewImage(event, 'logoPreview')">
-                    <img id="logoPreview" src="/{{ $config->logo }}" alt="Vista previa" style="margin-top:10px; max-height:150px; {{ $config->logo ? '' : 'display:none;' }}">
-                </div>
+        {{-- Logo con preview --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Logo</label>
+            <div class="col-md-9">
+                <input type="file" name="logo" id="logo" class="form-control" accept="image/*" onchange="previewImage(event, 'logoPreview')">
+                @if($config->logo)
+                    <div class="mt-2">
+                        <p><strong>Logo actual:</strong></p>
+                        <img src="{{ asset($config->logo) }}" alt="Logo actual" style="max-height: 100px;" class="img-thumbnail">
+                    </div>
+                @endif
+                <img id="logoPreview" src="#" alt="Vista previa" style="margin-top:10px; max-height:150px; display:none;">
+                @error('logo')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Imagen 01 con preview --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Imagen 01</label>
-                <div class="col-md-9">
-                    <input type="file" name="imagen1" id="imagen1" class="form-control" accept="image/*" onchange="previewImage(event, 'img01Preview')">
-                    <img id="img01Preview" src="/{{ $config->img_01 }}" alt="Vista previa" style="margin-top:10px; max-height:150px; {{ $config->img_01 ? '' : 'display:none;' }}">
-                </div>
+        {{-- Imagen 01 con preview --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Imagen 01</label>
+            <div class="col-md-9">
+                <input type="file" name="imagen1" id="imagen1" class="form-control" accept="image/*" onchange="previewImage(event, 'img01Preview')">
+                @if($config->img_01)
+                    <div class="mt-2">
+                        <p><strong>Imagen 01 actual:</strong></p>
+                        <img src="{{ asset($config->img_01) }}" alt="Imagen 01 actual" style="max-height: 100px;" class="img-thumbnail">
+                    </div>
+                @endif
+                <img id="img01Preview" src="#" alt="Vista previa" style="margin-top:10px; max-height:150px; display:none;">
+                @error('imagen1')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Imagen 02 con preview --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Imagen 02</label>
-                <div class="col-md-9">
-                    <input type="file" name="imagen2" id="imagen2" class="form-control" accept="image/*" onchange="previewImage(event, 'img02Preview')">
-                    <img id="img02Preview" src="/{{ $config->img_02 }}" alt="Vista previa" style="margin-top:10px; max-height:150px; {{ $config->img_02 ? '' : 'display:none;' }}">
-                </div>
+        {{-- Imagen 02 con preview --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Imagen 02</label>
+            <div class="col-md-9">
+                <input type="file" name="imagen2" id="imagen2" class="form-control" accept="image/*" onchange="previewImage(event, 'img02Preview')">
+                @if($config->img_02)
+                    <div class="mt-2">
+                        <p><strong>Imagen 02 actual:</strong></p>
+                        <img src="{{ asset($config->img_02) }}" alt="Imagen 02 actual" style="max-height: 100px;" class="img-thumbnail">
+                    </div>
+                @endif
+                <img id="img02Preview" src="#" alt="Vista previa" style="margin-top:10px; max-height:150px; display:none;">
+                @error('imagen2')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
+        </div>
 
-            {{-- Presentación --}}
-            <div class="form-group">
-                <label class="col-md-3 control-label">Presentación</label>
-                <div class="col-md-9">
-                    {{ Form::textarea('presentacion', $config->presentacion, [
-                        'class' => 'form-control ckeditor',
-                        'placeholder' => 'Ingrese Presentación'
-                    ]) }}
-                </div>
+        {{-- Presentación --}}
+        <div class="form-group">
+            <label class="col-md-3 control-label">Presentación</label>
+            <div class="col-md-9">
+                {{ Form::textarea('presentacion', null, [
+                    'class' => 'form-control',
+                    'placeholder' => 'Ingrese Presentación',
+                    'rows' => 5
+                ]) }}
+                @error('presentacion')
+                    <span class="help-block text-danger">{{ $message }}</span>
+                @enderror
             </div>
-
-        @endforeach
+        </div>
 
         {{-- Botones --}}
         <div class="form-group form-actions">

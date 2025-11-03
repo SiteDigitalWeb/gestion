@@ -184,53 +184,7 @@ body {
 
 </section>
 
-@if($empresa->tarifas == 2)
-@else
-<section  id="tablas" size="A4">
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		<img src="/{{$configuracion->logo}}">
-	</div>
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="datos">
-		<h4><b>{{$configuracion->empresa}}</b></h4>
-		<p>{{$configuracion->direccion}}</p>
-		<p>Telefono: {{$configuracion->telefono}}</p>
-		<p>{{$configuracion->correo}}</p>
-		<p>{{$configuracion->website}}</p>
-	</div>
-<table>
-	<tbody>
-		<tr>
-			<td colspan="6" class="text-center" bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px">Inversión Asociada a Productos y Servicios</td>
-		</tr>
-		<tr class="text-center"  bgcolor="{{$configuracion->color_principal}}" style="color:#fff; padding: 15px">
-			<td style="padding: 15px">Item</td>
-			<td>Descripción</td>
-			<td>Producto / Servicio</td>
-			<td>Cant.</td>
-			<td>Valor Unit.</td>
-			<td>Valor Total</td>
-		</tr>
-		<tr>
-			<td><b>DISEÑO DE SITIO WEB</b></td>
-			<td>Sitio web desarrollado en plataforma licenciada administrable, con hasta 6 páginas internas (ejemplo: home, nosotros, servicios, productos, contacto), optimizadas para SEO. </td>
-			<td></td>
-			<td>1</td>
-			<td>$1.800.000</td>
-			<td>$1.800.000</td>
-		</tr>
-		<tr>
-			<td><b>PÁGINA INTERNA ADICIONAL PARA EL SITIO WEB</b></td>
-			<td>Sitio web desarrollado en plataforma licenciada administrable, con hasta 6 páginas internas (ejemplo: home, nosotros, servicios, productos, contacto), optimizadas para SEO. </td>
-			<td></td>
-			<td>1</td>
-			<td>$300.000</td>
-			<td>$300.000</td>
-		</tr>
-	
-	</tbody>
-</table>
-</section>
-@endif
+
 <section id="condiciones" size="A4">
 	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 		<img src="/{{$configuracion->logo}}">

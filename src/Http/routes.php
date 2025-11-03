@@ -1,7 +1,7 @@
 <?php
 Route::group(['middleware' => ['auth','administrador']], function (){
 Route::prefix('ge')->group(function () {
-Route::get('commercial-list', 'Sitedigitalweb\Gestion\Http\GestionController@indexlist');
+
 Route::get('register-user', 'Sitedigitalweb\Gestion\Http\GestionController@registro');
 
 Route::resource('commercial', Sitedigitalweb\Gestion\Http\UserController::class)->names('ge.commercial');
@@ -19,6 +19,7 @@ Route::resource('configuration', \Sitedigitalweb\Gestion\Http\ConfigurationContr
 Route::get('portfolio/{id}', 'Sitedigitalweb\Gestion\Http\GestionController@portafolio');
 
 Route::post('update-configuration/{id}', 'Sitedigitalweb\Gestion\Http\GestionController@updatecon');
+
 Route::get('dashboard', 'Sitedigitalweb\Gestion\Http\GestionController@dashboard');
 
 Route::get('gestion/comercial/editar-propuesta/{id}', 'DigitalsiteSaaS\Gestion\Http\GestionController@editarpropuesta');
