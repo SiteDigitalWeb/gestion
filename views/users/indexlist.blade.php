@@ -14,8 +14,12 @@
  <li>
    <a href="/ge/commercial"><i class="fa fa-list-ul"></i> Usuarios</a>
   </li>
+   <li>
+   <a href="/users/import"><i class="fa fa-list-ul"></i> Exportar/Importar</a>
+  </li>
  </ul>
 </div>
+
 
 <div class="container">
  <?php $status=Session::get('status'); ?>
@@ -56,43 +60,24 @@
  <thead>
   <tr>
    <th class="text-center">Nombres y Apellidos</th>
-   <th class="text-center">Empresa</th>
    <th class="text-center">Estado</th>
    <th class="text-center">Email</th>
-   <th class="text-center">Intéres</th>
-   <th class="text-center">Referido</th>
    <th class="text-center">Creación</th>
    <th class="text-center">Acciones</th>
   </tr>
  </thead>
-    
  <tbody>
-  @foreach($usuarios as $usuariosa)
-   <tr>
-   <td class="text-center">{{$usuariosa->name}} {{$usuariosa->last_name}}</td>
-   <td class="text-center">{{$usuariosa->empresa}}</td>
-    @foreach($funels as $funelsa)
-    @if($usuariosa->funel_id == $funelsa->id)
-   <td><span class="badge" style="background:{{$funelsa->color}}">{{$funelsa->funel}} </span></td>
-    @endif
-   @endforeach
-      
-   <td>{{$usuariosa->email}}</td>
-     
-       <td>
-        {{$usuariosa->valor}}
-    </td>
-
-      
-
-       @foreach($referidos as $referidosa)
-       @if($usuariosa->referido_id == $referidosa->id)
-       <td>{{$referidosa->referidos}}</td>
-       @endif
-       @endforeach
-
-       <td>{{$usuariosa->created_at}}</td>
-       <td class="text-center">
+ @foreach($usuarios as $usuariosa)
+ <tr>
+  <td class="text-center">{{$usuariosa->name}} {{$usuariosa->last_name}}</td>
+  @foreach($funels as $funelsa)
+   @if($usuariosa->funel_id == $funelsa->id)
+    <td><span class="badge" style="background:{{$funelsa->color}}">{{$funelsa->funel}} {{$usuariosa->funel_id}}{{$funelsa->id}}</span></td>
+   @endif
+  @endforeach
+  <td>{{$usuariosa->email}}</td>
+  <td>{{$usuariosa->created_at}}</td>
+  <td class="text-center">
 
         <a href="<?=URL::to('ge/proposal');?>/{{$usuariosa->id}}?utm_referido={{$usuariosa->referido_id}}&utm_fecha={{$usuariosa->fecha}}"><span  id="tip" data-toggle="tooltip" data-placement="left" title="Ver Porpuestas" class="btn btn-warning"><i class="fa fa-book sidebar-nav-icon"></i></span></a>
 

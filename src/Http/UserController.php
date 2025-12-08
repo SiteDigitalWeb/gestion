@@ -61,28 +61,38 @@ class UserController extends Controller
     return view('gestion::users.index', compact('usuarios','funels'));
     }
 
-    public function indexlist()
-    {
-    // Resolver modelos dinámicamente
-    $gestionModel   = $this->resolveModel('Cms_gestion');
-    $sectorModel    = $this->resolveModel('Cms_sector');
-    $productoModel  = $this->resolveModel('Cms_producto');
-    $referidoModel  = $this->resolveModel('Cms_referido');
-    $funelModel     = $this->resolveModel('Cms_funel');
-    $pageModel      = $this->resolveModelA('Page');
-
-    // Consultas
-    $usuarios   = $gestionModel::orderBy('created_at','desc')->get();
-    $sectores   = $sectorModel::all();
-    $productos  = $productoModel::all();
-    $referidos  = $referidoModel::all();
-    $funels     = $funelModel::all();
-    $interes    = $pageModel::all();
-
+  
+public function indexlist() {
+    $gestionModel = $this->resolveModel('Cms_gestion');
+    
+    // Solo lo esencial para la primera carga
+    $usuarios = $gestionModel::select([
+            'id', 
+            'name', 
+            'email', 
+            'phone',
+            'funel_id',
+            'sector_id',
+            'created_at'
+        ])
+        ->orderBy('created_at', 'desc')
+        ->get();
+    
+    // Cargar el resto cuando sea necesario (puedes moverlo a otra función)
+    $sectorModel = $this->resolveModel('Cms_sector');
+    $productoModel = $this->resolveModel('Cms_producto');
+    $referidoModel = $this->resolveModel('Cms_referido');
+    $funelModel = $this->resolveModel('Cms_funel');
+    $pageModel = $this->resolveModelA('Page');
+    
+    $sectores = $sectorModel::select(['id', 'sectores'])->get();
+    $productos = $productoModel::select(['id', 'producto'])->get();
+    $referidos = $referidoModel::select(['id', 'referidos'])->get();
+    $funels = $funelModel::select(['id', 'funel', 'color'])->get();
+    $interes = $pageModel::select(['id', 'title'])->get();
+    
     return view('gestion::users.indexlist', compact('usuarios','sectores','productos','referidos','funels','interes'));
-    }
-
-
+}
 
     // Crear producto
     public function create()
@@ -163,56 +173,50 @@ class UserController extends Controller
         return view('gestion::products.show', compact('producto'));
     }
 
-    // Editar producto
-    public function edit($id)
-    {
-          // Resolver modelos según tenant
-    $gestionClass   = $this->resolveModel('Cms_gestion');
-    $sectorClass    = $this->resolveModel('Cms_sector');
-    $referidoClass  = $this->resolveModel('Cms_referido');
-    $cantidadClass  = $this->resolveModel('Cms_cantidad');
-    $productoClass  = $this->resolveModel('Cms_producto');
-    $funelClass     = $this->resolveModel('Cms_funel');
-    $paisesClass     = $this->resolveModel('Cms_pais');
-
-    // Consulta del usuario con joins
-    $usuario = $gestionClass::join('cms_cantidad', 'cms_cantidad.id', '=', 'cms_users.cantidad_id')
-        ->leftJoin('cms_referidos', 'cms_referidos.id', '=', 'cms_users.referido_id')
-        ->leftJoin('cms_sector', 'cms_sector.id', '=', 'cms_users.sector_id')
-        ->leftJoin('cms_productos', 'cms_productos.id', '=', 'cms_users.interes')
-        ->leftJoin('cms_funel', 'cms_funel.id', '=', 'cms_users.tipo')
-        ->leftJoin('cms_paises', 'cms_paises.id', '=', 'cms_users.country_id')
-        ->leftjoin('cms_departamentos', 'cms_departamentos.id', '=', 'cms_users.city_id')
-        ->where('cms_users.id', $id)
-        ->get();
-
-    // Catálogos básicos
-    $sectores   = $sectorClass::all();
-    $referidos  = $referidoClass::all();
-    $cantidades = $cantidadClass::all();
-    $funels     = $funelClass::all();
-    $paises     = $paisesClass::orderBy('pais', 'ASC')->get();
-
-    // Procesar intereses
-    $intereses  = $gestionClass::where('id', $id)->get();
-    $productosa = collect(); 
-    $productos  = collect();
-    $id_str     = [];
-
-    foreach ($intereses as $interes) {
-        $ideman   = $interes->interes;
-        $id_str   = explode(',', $ideman);
-
-        $productosa = $productoClass::whereIn('id', $id_str)->get();
-        $productos  = $productoClass::whereNotIn('id', $id_str)->get();
+   public function edit($id)
+{
+    try {
+        // Resolver modelos
+        $gestionClass = $this->resolveModel('Cms_gestion');
+        
+        // Obtener el usuario principal
+        $usuario = $gestionClass::findOrFail($id);
+        
+        // Resolver otros modelos
+        $sectorClass    = $this->resolveModel('Cms_sector');
+        $referidoClass  = $this->resolveModel('Cms_referido');
+        $cantidadClass  = $this->resolveModel('Cms_cantidad');
+        $productoClass  = $this->resolveModel('Cms_producto');
+        $funelClass     = $this->resolveModel('Cms_funel');
+        $paisesClass    = $this->resolveModel('Cms_pais');
+        
+        // Catálogos básicos
+        $sectores   = $sectorClass::all();
+        $referidos  = $referidoClass::all();
+        $cantidades = $cantidadClass::all();
+        $funels     = $funelClass::all();
+        $paises     = $paisesClass::orderBy('pais', 'ASC')->get();
+        
+        // Procesar intereses
+        $productosa = collect(); 
+        $productos  = collect();
+        $id_str     = [];
+        
+        if ($usuario->interes) {
+            $id_str = explode(',', $usuario->interes);
+            $productosa = $productoClass::whereIn('id', $id_str)->get();
+            $productos = $productoClass::whereNotIn('id', $id_str)->get();
+        }
+        
+        return view('gestion::users.edit', compact(
+            'usuario', 'productos', 'productosa', 'sectores',
+            'id_str', 'funels', 'referidos', 'cantidades', 'paises'
+        ));
+        
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        abort(404, 'Usuario no encontrado');
     }
-
-    return view('gestion::users.edit', compact(
-        'usuario', 'productos', 'productosa', 'sectores',
-        'id_str', 'funels', 'referidos', 'cantidades', 'paises'
-    ));
-    
-    }
+}
 
     // Actualizar producto
     public function update(Request $request, $id)
@@ -240,12 +244,13 @@ class UserController extends Controller
     $gestion->email       = Input::get('email');
     $gestion->phone       = Input::get('numero');
     $gestion->interes     = $onlyconsonants;
-    $gestion->sector_id   = Input::get('sector');
-    $gestion->cantidad_id = Input::get('cantidad');
-    $gestion->referido_id = Input::get('referido');
+    $gestion->sector_id   = Input::get('sector') ?? '1';
+    $gestion->cantidad_id = Input::get('cantidad') ?? '1';
+    $gestion->referido_id = Input::get('referido') ?? '1';
     $gestion->message     = Input::get('comentarios');
-    $gestion->country_id  = Input::get('pais');
-    $gestion->city_id     = Input::get('ciudad');
+    $gestion->country_id  = Input::get('pais') ?? '1';
+    $gestion->city_id     = Input::get('ciudad') ?? '1';
+    $gestion->funel_id    = Input::get('tipo') ?? '1';
 
     $gestion->save();
 
