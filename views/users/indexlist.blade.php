@@ -89,7 +89,7 @@
           <i class="fa fa-pencil-square-o sidebar-nav-icon"></i>
         </a>
 
-        
+  @if(Auth::user()->rol_id == 1)        
         {{-- Eliminar --}}
         {!! Form::open([
             'method' => 'DELETE',
@@ -98,8 +98,10 @@
             'onsubmit' => "return confirm('¿Está seguro que desea eliminar este sector?')"
         ]) !!}
           <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-            <i class="fa fa-trash"></i>
+            <i class="fa fa-trash"></i> 
           </button>
+  @else
+  @endif
         {!! Form::close() !!}
        </td>
       </tr>
