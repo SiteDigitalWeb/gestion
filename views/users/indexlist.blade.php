@@ -89,7 +89,7 @@
           <i class="fa fa-pencil-square-o sidebar-nav-icon"></i>
         </a>
 
-  @if(Auth::user()->rol_id == 1)        
+  @if(Auth::user()->id == 1)        
         {{-- Eliminar --}}
         {!! Form::open([
             'method' => 'DELETE',

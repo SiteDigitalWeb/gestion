@@ -239,7 +239,7 @@
                         {{ Form::textarea('comentarios', old('comentarios', $usuario->message ?? ''), ['class' => 'form-control', 'placeholder' => 'Ingrese comentarios', 'rows' => '4']) }}
                     </div>
                 </div>
-                @if(Auth::user()->rol_id == 1)  
+                @if(Auth::user()->id == 1)  
                 <div class="form-group form-actions">
                     <div class="col-md-9 col-md-offset-3">
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Actualizar</button>
