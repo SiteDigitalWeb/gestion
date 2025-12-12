@@ -130,12 +130,12 @@ public function updateFunel(Request $request, $id)
  $paises = Cms_paiscon::orderBy('pais', 'ASC')->get();
  $funels = Cms_funel::all();
 }else{
- $productos = \DigitalsiteSaaS\Gestion\Tenant\Producto::all();
- $sectores = \DigitalsiteSaaS\Gestion\Tenant\Sector::all();
- $referidos = \DigitalsiteSaaS\Gestion\Tenant\Referido::all();
- $cantidades = \DigitalsiteSaaS\Gestion\Tenant\Cms_cantidad::all();
- $funels = \DigitalsiteSaaS\Gestion\Tenant\Cms_funel::all();
- $paises = \DigitalsiteSaaS\Carrito\Tenant\Pais::orderBy('pais', 'ASC')->get();
+ $productos = \Sitedigitalweb\Gestion\Tenant\Cms_producto::all();
+ $sectores = \Sitedigitalweb\Gestion\Tenant\Cms_sector::all();
+ $referidos = \Sitedigitalweb\Gestion\Tenant\Cms_referido::all();
+ $cantidades = \Sitedigitalweb\Gestion\Tenant\Cms_cantidad::all();
+ $paises = \Sitedigitalweb\Pagina\Tenant\Cms_paiscon::orderBy('pais', 'ASC')->get();
+ $funels = \Sitedigitalweb\Gestion\Tenant\Cms_funel::all();
 
 }
  return view('gestion::registrar')->with('productos', $productos)->with('sectores', $sectores)->with('referidos', $referidos)->with('cantidades', $cantidades)->with('paises', $paises)->with('funels', $funels);
